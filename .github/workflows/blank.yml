@@ -38,8 +38,8 @@ jobs:
         run: |
           echo ${{ steps.test.outcome }};
 
-          echo ${{ steps.test.outcome != 'skipped' || steps.test.outcome != 'cancelled' }}
-          if ${{steps.test.outcome != 'skipped' || steps.test.outcome != 'cancelled' }} ; then
+          echo ${{ steps.test.outcome != 'skipped' && steps.test.outcome != 'cancelled' }}
+          if ${{steps.test.outcome != 'skipped' && steps.test.outcome != 'cancelled' }} ; then
             echo "Only run when not skipped or cancelled"
           fi
 
