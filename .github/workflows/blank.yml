@@ -25,6 +25,22 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Prepare
+        run: exit 1
+
+      - name: Test
+        id: test
+        run: echo "hello"
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: exit 1
+        if: always()
+        run: |
+          echo ${{ steps.test.outcome }};
+
+          echo ${{ steps.test.outcome != 'skipped' && steps.test.outcome != 'cancelled' }}
+          if ${{steps.test.outcome != 'skipped' && steps.test.outcome != 'cancelled' }} ; then
+            echo "Only run when not skipped or cancelled"
+          fi
+
+          echo "finish"
